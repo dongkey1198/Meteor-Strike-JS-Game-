@@ -15,8 +15,7 @@ let game_score = 0;
 // ===================================== 게임 초기화 ===============================
 function init(){
     initRocket();
-    speed.innerText = 1;
-    score.innerText = 0;
+    initGameInfo();
 }
 
 function initRocket(){
@@ -25,18 +24,14 @@ function initRocket(){
     rocket.style.top = 602 + "px";
     rocket.style.left = (354/3) + "px";
 }
-// ================================================================================
+
+function initGameInfo(){
+    speed.innerText = 1;
+    score.innerText = 0;
+}
 
 //======================================== 게임 컨트롤 ===========================================
-document.addEventListener("keydown", gameControl);
-// 게임 컨트롤 함수
-function gameControl(event){
-    //로켓 움직임 컨트롤
-    moveRocket(event);
-}
-// 로켓 움직임 컨트롤 함수
-function moveRocket(event){
-
+document.addEventListener("keydown", (event) =>{
     if(event.key === "ArrowLeft"){
         let left = parseInt(window.getComputedStyle(rocket).getPropertyValue("left"));
         if(left>0){
@@ -52,7 +47,7 @@ function moveRocket(event){
     }
 
     else if(event.key ==="ArrowUp"){
-        if(fall_speed < 2.5){
+        if(fall_speed < 2){
             fall_speed += 0.5;
             speed_level += 1;
         }
@@ -66,11 +61,10 @@ function moveRocket(event){
         }
         speed.innerText = speed_level;
     }
-}
+});
 
 
 let meteorites = setInterval(() =>{
-
     // 마지막으로 생성됬던 노드들
     let mt1_Last = document.getElementById("meteor" + (counter - 1));
     let mt2_Last = document.getElementById("meteor2" + (counter - 1));
@@ -161,18 +155,20 @@ let meteorites = setInterval(() =>{
             score.innerText = game_score ;
         }
         
-        
         let rocket_top = parseInt(window.getComputedStyle(rocket).getPropertyValue("top"));
         let rocket_left = parseInt(window.getComputedStyle(rocket).getPropertyValue("left"));
         
-        
-
-        if((parseInt(i_m1_top) + 100) == rocket_top && (rocket_left == i_m1_left || rocket_left == i_m2_left) ){
-            alert("gameOver")
+        if(((parseInt(i_m1_top) + 100) == rocket_top) && (rocket_left == i_m1_left || rocket_left == i_m2_left) ){
             clearInterval(meteorites)
+            resetGame();
         }
     }
 
 }, 1);
+
+function resetGame(){
+
+    
+}
 
 init();

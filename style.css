@@ -120,7 +120,7 @@ h1 {
 
 .game-window {
   width: 360px;
-  height: 900px;
+  height: 100vh;
   max-height: 900px;
   min-height: 900px;
   border: 3px solid black;

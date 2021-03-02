@@ -1,10 +1,9 @@
 const container = document.querySelector(".container");
 const gameStart = document.querySelector(".playing button");
 const gameWindow = document.querySelector(".game-window");
-const rocket = document.getElementById("rocket");
 const speed = document.querySelector(".speed span");
 const score = document.querySelector(".score span");
-
+let rocket;
 // 로켓 움직임을 위한 값 width값의 3분의 1씩 움진인다
 const one_move = 354/3;
 
@@ -15,17 +14,17 @@ let fall_speed = 1;
 let speed_level = 1;
 let game_score = 0;
 
-
+// ============   게임 시작 윈도우 =====================
 gameStart.addEventListener('click', (event) => {
     //게임 시작버튼 노드 삭제
     let window = container.children[3];
     container.removeChild(window);
-    countDown();
-    
-    
+    countDown(); 
 });
 
+//  게임시작 버튼을 누르면 3초부터 카운터 시작후 게임 진행
 function countDown(){
+    initGameData();
     let count_down = document.createElement("div");
     count_down.setAttribute("class", "count-down");
     container.appendChild(count_down);
@@ -48,28 +47,66 @@ function countDown(){
             init();
         }
     }, 1000);
+}
 
+function gameOver() {
+    let game_over = document.createElement("div");
+    game_over.setAttribute("class", "game-over");
+    container.appendChild(game_over);
     
+    const over = document.querySelector(".game-over");
+    
+    let text = document.createElement("h1");
+    text.innerText ="Game Over";
 
+    let button = document.createElement("button");
+    button.innerText = "다시시작";
+
+    over.appendChild(text);
+    over.appendChild(button);
+
+    const gameOverBtn = document.querySelector(".game-over button");
+    gameOverBtn.addEventListener("click", (event)=>{
+        
+        container.removeChild(game_over);
+        
+        while(gameWindow.hasChildNodes()){
+            gameWindow.removeChild(gameWindow.firstChild);
+        }
+        countDown();
+    });
+    
 }
 
 // ===================================== 게임 초기화 ===============================
 function init(){
     initRocket();
-    initGameInfo();
+    initGameData();
     game();
 }
 
 function initRocket(){
+
+    let rocket_q = document.createElement("div");
+    rocket_q.setAttribute("class","rocket");
+    gameWindow.appendChild(rocket_q);
+
+    rocket = document.querySelector(".rocket");
+
     rocket.style.width = one_move + "px";
     rocket.style.height = 120 + "px";
     rocket.style.top = 602 + "px";
     rocket.style.left = (354/3) + "px";
 }
 
-function initGameInfo(){
+function initGameData(){
     speed.innerText = 1;
     score.innerText = 0;
+    counter = 0;
+    speed_level = 1;
+    fall_speed = 1;
+    currentMeteorities = [];
+    
 }
 
 //======================================== 게임 컨트롤 ===========================================
@@ -183,9 +220,15 @@ function game(){
             let i_m1_top = parseFloat(window.getComputedStyle(i_m1).getPropertyValue("top"));
             let i_m1_left = parseInt(window.getComputedStyle(i_m1).getPropertyValue("left"));
             let i_m2_left = parseInt(window.getComputedStyle(i_m2).getPropertyValue("left"));
+            
             i_m1.style.top = i_m1_top + fall_speed + "px";
             i_m2.style.top = i_m1_top + fall_speed + "px";
             i_h.style.top = i_m1_top + fall_speed + "px";
+
+            if(i_m1_top > 580){
+                i_m1.classList.add("explosion");
+                i_m2.classList.add("explosion");
+            }
 
             if(i_m1_top > 620){
                 currentMeteorities.shift();
@@ -205,6 +248,7 @@ function game(){
             if(((parseInt(i_m1_top) + 80) === rocket_top) && (rocket_left === i_m1_left || rocket_left === i_m2_left)
             || ((parseInt(i_m1_top) + 80) > rocket_top) && (rocket_left === i_m1_left || rocket_left === i_m2_left)){
                 clearInterval(playing);
+                gameOver();
             }
         }
     }, 1);

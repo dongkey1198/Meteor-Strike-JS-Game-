@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./style.css">
+    <link rel="shortcut icon" href="#">
     <title>Meteor Strike</title>
 </head>
 <body>
@@ -17,9 +18,7 @@
             <div class="score">Score: <span>0</span></div>
         </div>
 
-        <div class="game-window">
-            <!-- <div class="rocket"></div> -->
-        </div>
+        <div class="game-window"></div>
 
         <div class="playing">
             <h3>게임조작 방법</h3>
@@ -30,9 +29,15 @@
             </p>
             <button>게임 시작</button>
         </div>
+    </div>
 
-        
-
+    <div class="audios">
+        <audio src="./audios/click.wav" id="click"></audio>
+        <audio src="./audios/explosion.wav" id="explo"></audio>
+        <audio src="./audios/speed.wav" id="speed"></audio>
+        <audio src="./audios/move.wav" id="move"></audio>
+        <audio src="./audios/countdown.wav" id="countdown"></audio>
+        <audio src="./audios/lose.wav" id="lose"></audio>
     </div>
     <script src="./main.js"></script>
 </body>

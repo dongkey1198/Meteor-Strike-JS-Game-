@@ -9,6 +9,7 @@ body {
 
 .container {
   width: 100%;
+  min-width: 593px;
   height: 100vh;
   display: flex;
   flex-direction: column;

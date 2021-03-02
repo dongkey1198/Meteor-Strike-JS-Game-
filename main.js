@@ -14,9 +14,49 @@ let fall_speed = 1;
 let speed_level = 1;
 let game_score = 0;
 
+
+function clickSound(){
+    let click = document.getElementById("click");
+    click.playbackRate = 2;
+    click.play();
+}
+
+function explosionSound(){
+    let explo = document.getElementById("explo");
+    explo.playbackRate = 4.0;
+    explo.play();
+}
+
+function moveSound(){
+    let move = document.getElementById("move");
+    move.playbackRate = 3.0;
+    move.play();
+    
+
+}
+
+function speedSound(){
+    let s = document.getElementById("speed");
+    s.playbackRate = 2;
+    s.play();
+}
+
+function countDownSound(){
+    let countDown = document.getElementById("countdown");
+    countDown.playbackRate = 0.98;
+    countDown.play();
+}
+
+function loseSound(){
+    let lose = document.getElementById('lose');
+    lose.playbackRate = 1.5;
+    lose.play();
+}
+
 // ============   게임 시작 윈도우 =====================
 gameStart.addEventListener('click', (event) => {
     //게임 시작버튼 노드 삭제
+    clickSound();
     let window = container.children[3];
     container.removeChild(window);
     countDown(); 
@@ -32,6 +72,8 @@ function countDown(){
     let cd = document.querySelector(".count-down");
     let count = 3;
     cd.innerText = count
+
+    countDownSound();
 
     let count_interval = setInterval(() =>{
         count--;
@@ -65,9 +107,11 @@ function gameOver() {
     over.appendChild(text);
     over.appendChild(button);
 
+    loseSound();
+
     const gameOverBtn = document.querySelector(".game-over button");
     gameOverBtn.addEventListener("click", (event)=>{
-        
+        clickSound();
         container.removeChild(game_over);
         
         while(gameWindow.hasChildNodes()){
@@ -114,6 +158,7 @@ document.addEventListener("keydown", (event) =>{
     if(event.key === "ArrowLeft"){
         let left = parseInt(window.getComputedStyle(rocket).getPropertyValue("left"));
         if(left>0){
+            moveSound();
             rocket.style.left = left - one_move +"px";
         }
     }
@@ -121,14 +166,16 @@ document.addEventListener("keydown", (event) =>{
     else if(event.key === "ArrowRight"){
         let left = parseInt(window.getComputedStyle(rocket).getPropertyValue("left"));
         if(left < 294 - one_move){
+            moveSound();
             rocket.style.left = left + one_move + "px";
         }
     }
 
     else if(event.key ==="ArrowUp"){
-        if(fall_speed < 2.5){
+        if(fall_speed < 2){
             fall_speed += 0.5;
             speed_level += 1;
+            speedSound();
         }
         speed.innerText = speed_level;
     }
@@ -137,6 +184,7 @@ document.addEventListener("keydown", (event) =>{
         if(fall_speed > 1){
             fall_speed -= 0.5;
             speed_level -= 1;
+            speedSound();
         }
         speed.innerText = speed_level;
     }
@@ -235,6 +283,7 @@ function game(){
             }
 
             if(i_m1_top > gw_height - 100){
+                explosionSound();
                 currentMeteorities.shift();
                 i_m1.remove();
                 i_m2.remove();

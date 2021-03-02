@@ -95,7 +95,7 @@ function initRocket(){
 
     rocket.style.width = one_move + "px";
     rocket.style.height = 120 + "px";
-    rocket.style.top = 602 + "px";
+    rocket.style.bottom = 0 + "px";
     rocket.style.left = (354/3) + "px";
 }
 
@@ -225,12 +225,12 @@ function game(){
             i_m2.style.top = i_m1_top + fall_speed + "px";
             i_h.style.top = i_m1_top + fall_speed + "px";
 
-            if(i_m1_top > 580){
+            if(i_m1_top > 780){
                 i_m1.classList.add("explosion");
                 i_m2.classList.add("explosion");
             }
 
-            if(i_m1_top > 620){
+            if(i_m1_top > 820){
                 currentMeteorities.shift();
                 i_m1.remove();
                 i_m2.remove();

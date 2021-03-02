@@ -148,7 +148,6 @@ h1 {
   background-repeat: no-repeat;
   position: absolute;
   top: 0;
-  transition: background-image 0.1s ease-in;
 }
 
 .meteor.explosion {

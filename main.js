@@ -5,7 +5,7 @@ const speed = document.querySelector(".speed span");
 const score = document.querySelector(".score span");
 let rocket;
 // 로켓 움직임을 위한 값 width값의 3분의 1씩 움진인다
-const one_move = 354/3;
+const one_move = 294/3;
 
 let currentMeteorities = [];
 let counter = 0;
@@ -93,10 +93,10 @@ function initRocket(){
 
     rocket = document.querySelector(".rocket");
 
-    rocket.style.width = one_move + "px";
-    rocket.style.height = 120 + "px";
+    rocket.style.width = 100 + "px";
+    rocket.style.height = 100 + "px";
     rocket.style.bottom = 0 + "px";
-    rocket.style.left = (354/3) + "px";
+    rocket.style.left = (294/3) + "px";
 }
 
 function initGameData(){
@@ -120,7 +120,7 @@ document.addEventListener("keydown", (event) =>{
 
     else if(event.key === "ArrowRight"){
         let left = parseInt(window.getComputedStyle(rocket).getPropertyValue("left"));
-        if(left < 354 - one_move){
+        if(left < 294 - one_move){
             rocket.style.left = left + one_move + "px";
         }
     }
@@ -182,12 +182,12 @@ function game(){
 
             // 마지막으로 생성됬던 노드들의 위치보다 -120된 
             // 위치에서 생성된다 즉 Top = 0 에서 위치함
-            meteo_1.style.top = mt1_last_top - 240 + "px";
-            meteo_2.style.top = mt1_last_top - 240 + "px";
-            hole.style.top = mt1_last_top - 240 + "px"
+            meteo_1.style.top = mt1_last_top - 200 + "px";
+            meteo_2.style.top = mt1_last_top - 200 + "px";
+            hole.style.top = mt1_last_top - 200 + "px"
 
             // 운석 위치 좌표들
-            const positions = [0 , one_move, (354 - one_move)];
+            const positions = [0 , one_move, (294 - one_move)];
 
             // (0~2)의 난수 생성
             let random = Math.floor(Math.random() * 3);
@@ -224,20 +224,24 @@ function game(){
             i_m1.style.top = i_m1_top + fall_speed + "px";
             i_m2.style.top = i_m1_top + fall_speed + "px";
             i_h.style.top = i_m1_top + fall_speed + "px";
+            
 
-            if(i_m1_top > 780){
+            let gw_height = parseFloat(window.getComputedStyle(gameWindow).getPropertyValue("height"));
+            // console.log(gw_height);
+
+            if(i_m1_top > gw_height-120){
                 i_m1.classList.add("explosion");
                 i_m2.classList.add("explosion");
             }
 
-            if(i_m1_top > 820){
+            if(i_m1_top > gw_height - 100){
                 currentMeteorities.shift();
                 i_m1.remove();
                 i_m2.remove();
                 i_h.remove();
                 
                 //speed_level에 비례하게 게임 점수가 올라감
-                game_score += (10* speed_level);
+                game_score += (10 * speed_level);
                 score.innerText = game_score ;
             }
             

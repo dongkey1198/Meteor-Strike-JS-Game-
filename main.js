@@ -149,6 +149,7 @@ function initGameData(){
     counter = 0;
     speed_level = 1;
     fall_speed = 1;
+    game_score = 0;
     currentMeteorities = [];
     
 }

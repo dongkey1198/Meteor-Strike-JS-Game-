@@ -117,10 +117,14 @@ function gameOver() {
     let text = document.createElement("h1");
     text.innerText ="Game Over";
 
+    let score_text = document.createElement("h3");
+    score_text.innerText = `Total Score: ${game_score}`;
+
     let button = document.createElement("button");
     button.innerText = "다시시작";
 
     over.appendChild(text);
+    over.appendChild(score_text);
     over.appendChild(button);
 
     backgroundSound();
@@ -209,51 +213,10 @@ function speedUp(){
         speedSound();
         speed.innerText = speed_level;
     } 
-    // else if(event.key ==="ArrowUp"){
-    //     if(fall_speed < 2.5){
-    //         fall_speed += 0.5;
-    //         speed_level += 1;
-    //         speedSound();
-    //     }
-    //     speed.innerText = speed_level;
-    // }
 }
 
 // 모바일 플레이를 위한 컨트롤
-document.addEventListener("click", (event)=>{
-    
-    if(event.target.nodeName === "svg" || event.target.nodeName === "SPAN" || event.target.nodeName === "path"){
 
-        if(event.target.className === "left"){
-            moveLeft();
-        }
-        else if(event.target.className ==="right"){
-            moveRight();
-        }
-        else if(event.target.nodeName === "svg"){
-            if(event.target.parentNode.className === "left"){
-                moveLeft();
-            }
-            else if(event.target.parentNode.className === "right"){
-                moveRight();
-            }
-        }
-        else if(event.target.nodeName === "path"){
-            if(event.target.parentNode.parentNode.className === "left"){
-                moveLeft();
-            }
-            else if(event.target.parentNode.parentNode.className === "right"){
-                moveRight();
-            }
-        }
-        else{
-            return;
-        }
-    }
-    else{
-        return;
-    }
-});
 
 function game(){
         let playing = setInterval(() =>{

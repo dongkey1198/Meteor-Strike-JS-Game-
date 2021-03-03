@@ -4,14 +4,10 @@
   padding: 0;
 }
 
-body {
-}
-
 .container {
   width: 100vw;
   height: 100vh;
-  min-width: 593px;
-  height: 100vh;
+  min-height: 752px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -101,6 +97,13 @@ h1 {
   border: 1px solid white;
   color: white;
 }
+.game-over h1 {
+  font-size: 40px;
+  margin-bottom: 10px;
+}
+.game-over h3 {
+  margin-bottom: 10px;
+}
 
 .game-over > button {
   width: 30%;
@@ -142,54 +145,6 @@ h1 {
   background-repeat: no-repeat;
   background-size: 80px 100px;
   z-index: 1;
-}
-
-.controls {
-  position: absolute;
-  bottom: 0;
-  z-index: 8;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 600px;
-  height: 110px;
-  margin-bottom: 20px;
-}
-
-.controls .left {
-  width: 100px;
-  height: 100px;
-  display: flex;
-  border-radius: 50px;
-  justify-content: center;
-  align-items: center;
-  font-size: 70px;
-  border: 3px solid grey;
-  background-color: rgba(58, 58, 58, 0.4);
-  color: grey;
-  padding-right: 10px;
-  cursor: pointer;
-}
-
-.controls .right {
-  width: 100px;
-  height: 100px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 70px;
-  border-radius: 100px;
-  border: 3px solid grey;
-  background-color: rgba(58, 58, 58, 0.4);
-  color: grey;
-  padding-left: 10px;
-  cursor: pointer;
-}
-
-.left:hover,
-.right:hover {
-  color: white;
-  border: 3px solid rgb(255, 255, 255);
 }
 
 .game-window {

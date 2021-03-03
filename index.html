@@ -6,6 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./style.css">
     <link rel="shortcut icon" href="#">
+    <script
+    src="https://use.fontawesome.com/releases/v5.15.2/js/all.js"
+    data-auto-a11y="true"
+    ></script>
     <title>Meteor Strike</title>
 </head>
 <body>
@@ -14,21 +18,28 @@
         <h1>Meteor Strike</h1>
 
         <div class="game-info">
-            <div class="speed">Speed: <span>0</span></div>
+            <div class="speed">Level: <span>0</span></div>
             <div class="score">Score: <span>0</span></div>
         </div>
 
         <div class="game-window"></div>
 
         <div class="playing">
-            <h3>게임조작 방법</h3>
+            <h3>게임 설명</h3>
             <p>
-                1. 키보드 좌우 키를 이용하여 로켓을 좌우로 움직일 수 있습니다. <br>
-                2. 키보드 아래위 키를 이용하여 운석이 떨어지는 속도를 조절할 수 있습니다. <br>
-                주의: 이 페이지는 모바일 환경에서는 사용할 수 없습니다.
+                1. 키보드 방향키 <-(좌)/(우)->키를 이용해서 로켓을 좌우로 이동 가능합니다. <br>
+                2. 모바일에서 플레이할 경우 화면 하단에 배치된 좌/우 버튼을 이용하세요.<br>
+                3. 점수가 올라갈수록 운석이 떨어지는 속도가 빨라집니다.
+                
             </p>
             <button>게임 시작</button>
         </div>
+
+        <div class="controls">
+            <span class="left"><i class="fas fa-chevron-left"></i></span>
+            <span class="right"><i class="fas fa-chevron-right"></i></span>
+        </div>
+
     </div>
 
     <div class="audios">
@@ -38,6 +49,7 @@
         <audio src="./audios/move.wav" id="move"></audio>
         <audio src="./audios/countdown.wav" id="countdown"></audio>
         <audio src="./audios/lose.wav" id="lose"></audio>
+        <audio src="./audios/background.mp3" id="background" loop></audio>
     </div>
     <script src="./main.js"></script>
 </body>

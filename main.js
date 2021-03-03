@@ -3,6 +3,8 @@ const gameStart = document.querySelector(".playing button");
 const gameWindow = document.querySelector(".game-window");
 const speed = document.querySelector(".speed span");
 const score = document.querySelector(".score span");
+const left = document.querySelector(".left");
+const right = document.querySelector(".right");
 let rocket;
 // 로켓 움직임을 위한 값 width값의 3분의 1씩 움진인다
 const one_move = 294/3;
@@ -10,11 +12,16 @@ const one_move = 294/3;
 let currentMeteorities = [];
 let counter = 0;
 
+let game_level = [300, 1000, 1800, 3600];
+let game_index = 0;
+
 let fall_speed = 1;
 let speed_level = 1;
 let game_score = 0;
 
+let hit_point = 80;
 
+// =============Game Sound Effects==================
 function clickSound(){
     let click = document.getElementById("click");
     click.playbackRate = 2;
@@ -31,8 +38,6 @@ function moveSound(){
     let move = document.getElementById("move");
     move.playbackRate = 3.0;
     move.play();
-    
-
 }
 
 function speedSound(){
@@ -51,6 +56,17 @@ function loseSound(){
     let lose = document.getElementById('lose');
     lose.playbackRate = 1.5;
     lose.play();
+}
+
+function backgroundSound(){
+    const bk = document.getElementById('background');
+    if(bk.paused){
+        bk.play();
+    }
+    else{
+        bk.pause();
+        bk.currentTime = 0;
+    }
 }
 
 // ============   게임 시작 윈도우 =====================
@@ -107,7 +123,9 @@ function gameOver() {
     over.appendChild(text);
     over.appendChild(button);
 
+    backgroundSound();
     loseSound();
+
 
     const gameOverBtn = document.querySelector(".game-over button");
     gameOverBtn.addEventListener("click", (event)=>{
@@ -126,6 +144,7 @@ function gameOver() {
 function init(){
     initRocket();
     initGameData();
+    backgroundSound();
     game();
 }
 
@@ -147,9 +166,11 @@ function initGameData(){
     speed.innerText = 1;
     score.innerText = 0;
     counter = 0;
+    game_index = 0;
     speed_level = 1;
     fall_speed = 1;
     game_score = 0;
+    hit_point = 80;
     currentMeteorities = [];
     
 }
@@ -157,40 +178,82 @@ function initGameData(){
 //======================================== 게임 컨트롤 ===========================================
 document.addEventListener("keydown", (event) =>{
     if(event.key === "ArrowLeft"){
-        let left = parseInt(window.getComputedStyle(rocket).getPropertyValue("left"));
+        moveLeft();
+    }
+
+    else if(event.key === "ArrowRight"){
+        moveRight();
+    }
+});
+
+function moveLeft(){
+    let left = parseInt(window.getComputedStyle(rocket).getPropertyValue("left"));
         if(left>0){
             moveSound();
             rocket.style.left = left - one_move +"px";
         }
-    }
+}
 
-    else if(event.key === "ArrowRight"){
-        let left = parseInt(window.getComputedStyle(rocket).getPropertyValue("left"));
-        if(left < 294 - one_move){
-            moveSound();
-            rocket.style.left = left + one_move + "px";
-        }
+function moveRight(){
+    let left = parseInt(window.getComputedStyle(rocket).getPropertyValue("left"));
+    if(left < 294 - one_move){
+        moveSound();
+        rocket.style.left = left + one_move + "px";
     }
+}
 
-    else if(event.key ==="ArrowUp"){
-        if(fall_speed < 2){
-            fall_speed += 0.5;
-            speed_level += 1;
-            speedSound();
-        }
+function speedUp(){
+    if(fall_speed < 2.3){
+        fall_speed += 0.3;
+        speed_level += 1;
+        speedSound();
         speed.innerText = speed_level;
-    }
+    } 
+    // else if(event.key ==="ArrowUp"){
+    //     if(fall_speed < 2.5){
+    //         fall_speed += 0.5;
+    //         speed_level += 1;
+    //         speedSound();
+    //     }
+    //     speed.innerText = speed_level;
+    // }
+}
 
-    else if(event.key ==="ArrowDown"){
-        if(fall_speed > 1){
-            fall_speed -= 0.5;
-            speed_level -= 1;
-            speedSound();
+// 모바일 플레이를 위한 컨트롤
+document.addEventListener("click", (event)=>{
+    
+    if(event.target.nodeName === "svg" || event.target.nodeName === "SPAN" || event.target.nodeName === "path"){
+
+        if(event.target.className === "left"){
+            moveLeft();
         }
-        speed.innerText = speed_level;
+        else if(event.target.className ==="right"){
+            moveRight();
+        }
+        else if(event.target.nodeName === "svg"){
+            if(event.target.parentNode.className === "left"){
+                moveLeft();
+            }
+            else if(event.target.parentNode.className === "right"){
+                moveRight();
+            }
+        }
+        else if(event.target.nodeName === "path"){
+            if(event.target.parentNode.parentNode.className === "left"){
+                moveLeft();
+            }
+            else if(event.target.parentNode.parentNode.className === "right"){
+                moveRight();
+            }
+        }
+        else{
+            return;
+        }
+    }
+    else{
+        return;
     }
 });
-
 
 function game(){
         let playing = setInterval(() =>{
@@ -293,14 +356,41 @@ function game(){
                 //speed_level에 비례하게 게임 점수가 올라감
                 game_score += (10 * speed_level);
                 score.innerText = game_score ;
+
+                let levelup_message = document.createElement("div");
+                levelup_message.setAttribute("class", "message");
+                
+                if(game_score >= 3600){
+                    speed.innerText = 'MAX SPEED';
+                }
+                else if(game_score >= game_level[game_index]){
+                    speedUp();    
+                    container.appendChild(levelup_message);
+                    let message = document.querySelector(".message");
+                    message.innerText = "Level Up";
+                    game_index++;
+                }
+                
+                if(container.contains(levelup_message)){
+                    let remove_message = setInterval(()=>{
+                    container.removeChild(levelup_message);
+                    clearInterval(remove_message);
+                    },1000);
+                }
+
             }
             
             let rocket_top = parseInt(window.getComputedStyle(rocket).getPropertyValue("top"));
             let rocket_left = parseInt(window.getComputedStyle(rocket).getPropertyValue("left"));
             
-            //rocekt_top = 602px
-            if(((parseInt(i_m1_top) + 80) === rocket_top) && (rocket_left === i_m1_left || rocket_left === i_m2_left)
-            || ((parseInt(i_m1_top) + 80) > rocket_top) && (rocket_left === i_m1_left || rocket_left === i_m2_left)){
+            // hit_point is 80
+            // max speed 2.3일때 운석의 Top의 범위를 줄인다
+            if(fall_speed === 2.3){
+                hit_point = 40;
+            }
+
+            if(((parseInt(i_m1_top) + hit_point) === rocket_top) && (rocket_left === i_m1_left || rocket_left === i_m2_left)
+            || ((parseInt(i_m1_top) + hit_point) > rocket_top) && (rocket_left === i_m1_left || rocket_left === i_m2_left)){
                 clearInterval(playing);
                 gameOver();
             }

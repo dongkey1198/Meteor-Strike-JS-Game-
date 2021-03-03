@@ -8,7 +8,8 @@ body {
 }
 
 .container {
-  width: 100%;
+  width: 100vw;
+  height: 100vh;
   min-width: 593px;
   height: 100vh;
   display: flex;
@@ -50,9 +51,9 @@ h1 {
 }
 
 .playing > p {
-  font-size: 12px;
+  font-size: 13px;
   margin-top: 10px;
-  line-height: 1rem;
+  line-height: 1.5rem;
 }
 
 .playing > button {
@@ -115,6 +116,21 @@ h1 {
   cursor: pointer;
 }
 
+.message {
+  position: absolute;
+  z-index: 5;
+  width: 500px;
+  height: 250px;
+  padding: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-size: 50px;
+  font-weight: 700;
+  transition: 0.1s ease;
+}
+
 .game-over > button:hover {
   background-color: rgb(29, 216, 54);
 }
@@ -126,6 +142,54 @@ h1 {
   background-repeat: no-repeat;
   background-size: 80px 100px;
   z-index: 1;
+}
+
+.controls {
+  position: absolute;
+  bottom: 0;
+  z-index: 8;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 600px;
+  height: 110px;
+  margin-bottom: 20px;
+}
+
+.controls .left {
+  width: 100px;
+  height: 100px;
+  display: flex;
+  border-radius: 50px;
+  justify-content: center;
+  align-items: center;
+  font-size: 70px;
+  border: 3px solid grey;
+  background-color: rgba(58, 58, 58, 0.4);
+  color: grey;
+  padding-right: 10px;
+  cursor: pointer;
+}
+
+.controls .right {
+  width: 100px;
+  height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 70px;
+  border-radius: 100px;
+  border: 3px solid grey;
+  background-color: rgba(58, 58, 58, 0.4);
+  color: grey;
+  padding-left: 10px;
+  cursor: pointer;
+}
+
+.left:hover,
+.right:hover {
+  color: white;
+  border: 3px solid rgb(255, 255, 255);
 }
 
 .game-window {

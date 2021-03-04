@@ -1,6 +1,6 @@
 # Meteor-Strike-JS-Game-
 
-<img src= "https://github.com/dongkey1198/Meteor-Strike-JS-Game-/blob/main/me.PNG" width = 400 height = 300>
+<img src= "https://github.com/dongkey1198/Meteor-Strike-JS-Game-/blob/main/me.PNG" width = 600 height = 300>
 Website URL: https://dongkey1198.github.io/Meteor-Strike-JS-Game-/
 
 Youtube Link: https://www.youtube.com/watch?v=mqAf4F11f3s&list=PLQK6CVAk91WyWH9ORWq_pDTtTsAt5JT_V&index=5
